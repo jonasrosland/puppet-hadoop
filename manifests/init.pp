@@ -1,13 +1,14 @@
 # /etc/puppet/modules/hadoop/manifests/init.pp
-class hadoop {
+class hadoop (
+	$master = $hadoop::params::master,
+	$slaves = $hadoop::params::slaves
+	)
+{
 
 	require hadoop::params
 	require hadoop::cluster
-
 	include hadoop::cluster::master
-	include hadoop::cluster::slave
-
-        Exec { path => "/bin" }
+ 	include hadoop::cluster::slave
 
 	group { "hadoop":
 		ensure => present,
@@ -121,11 +122,12 @@ class hadoop {
 	
 	exec { "${hadoop::params::hadoop_base}/hadoop-${hadoop::params::version}/bin/hadoop namenode -format":
 		user => "hduser",
+		group => "hadoop",
 		alias => "format-hdfs",
 		refreshonly => true,
 		path => "/bin:/usr/bin:/usr/local/bin",
 		subscribe => File["hdfs-dir"],
-		require => [ File["hadoop-symlink"], File["java-app-dir"], File["hduser-bash_profile"], File["mapred-site-xml"], File["hdfs-site-xml"], File["core-site-xml"], File["hadoop-env-sh"]]
+		require => [ File["hdfs-dir"], File["hadoop-symlink"], File["hduser-bash_profile"], File["mapred-site-xml"], File["hdfs-site-xml"], File["core-site-xml"], File["hadoop-env-sh"]]
 	}
 	
 	file { "${hadoop::params::hadoop_base}/hadoop-${hadoop::params::version}/conf/mapred-site.xml":
