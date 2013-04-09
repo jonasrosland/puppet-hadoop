@@ -2,18 +2,20 @@
 
 class hadoop::params {
 
-	include java::params
+	$java_home = $::hostname ? {
+		default => "/opt/java/jdk1.7.0_03",
+	}
 
 	$version = $::hostname ? {
-		default			=> "0.20.203.0",
+		default			=> "1.1.1",
 	}
         
 	$master = $::hostname ? {
-		default			=> "hadoop01",
+		default			=> "namenode1",
 	}
         
 	$slaves = $::hostname ? {
-		default			=> [hadoop01, hadoop-02, hadoop-03] 
+		default			=> ["datanode1", "datanode2", "datanode3"] 
 	}
 	$hdfsport = $::hostname ? {
 		default			=> "8020",
@@ -25,9 +27,6 @@ class hadoop::params {
 
 	$jobtrackerport = $::hostname ? {
 		default			=> "8021",
-	}
-	$java_home = $::hostname ? {
-		default			=> "${java::params::java_base}/jdk${java::params::java_version}",
 	}
 	$hadoop_base = $::hostname ? {
 		default			=> "/opt/hadoop",
