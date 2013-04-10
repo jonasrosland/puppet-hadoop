@@ -3,11 +3,11 @@ class hadoop (
 	$master = $hadoop::params::master,
 	$slaves = $hadoop::params::slaves
 	)
-inherits hadoop::params
 {
     
     Exec { path => "/bin:/usr/bin:/usr/local/bin" }
 
+	require hadoop::params
 	require hadoop::cluster
 	include hadoop::cluster::master
  	include hadoop::cluster::slave
