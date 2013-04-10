@@ -1,9 +1,7 @@
 # /etc/puppet/modules/hadoop/manifests/init.pp
-
 class hadoop (
-#	$master = $hadoop::params::master,
-#	$slaves = $hadoop::params::slaves
-	$master, $slaves
+	$master = $hadoop::params::master,
+	$slaves = $hadoop::params::slaves
 	)
 {
     
