@@ -1,9 +1,5 @@
 # /etc/puppet/modules/hadoop/manifests/init.pp
-class hadoop (
-	$master = $hadoop::params::master,
-	$slaves = $hadoop::params::slaves
-	)
-{
+class hadoop {
     
     Exec { path => "/bin:/usr/bin:/usr/local/bin" }
 
