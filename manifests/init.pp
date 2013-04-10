@@ -4,6 +4,8 @@ class hadoop (
 	$slaves = $hadoop::params::slaves
 	)
 {
+    
+    Exec { path => "/bin:/usr/bin:/usr/local/bin" }
 
 	require hadoop::params
 	require hadoop::cluster
